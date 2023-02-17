@@ -1,0 +1,27 @@
+terraform {
+  required_providers {
+    elasticstack = {
+      source  = "elastic/elasticstack"
+      version = "0.5.0"
+    }
+    kibana = {
+      source  = "disaster37/kibana"
+      version = "8.5.2"
+    }
+  }
+}
+
+provider "elasticstack" {
+  elasticsearch {
+    username  = "elastic"
+    password  = "foobar123"
+    endpoints = ["http://127.0.0.1:9200"]
+  }
+}
+
+provider "kibana" {
+  url      = "http://127.0.0.1:5601"
+  username = "elastic"
+  password = "foobar123"
+}
+

@@ -1,0 +1,28 @@
+teams = {
+  team01 = {
+    ad_group = "ou=foo,g=bar",
+    roles    = ["team01"],
+    spaces = ["team01"],
+    cluster_permissions = [],
+    features = ["discover", "dashboard", "canvas", "maps", "ml", "visualize", "savedObjectsManagement"]
+    indices = [
+      {
+        names      = ["foobar"],
+        privileges = ["index"]
+      }
+    ]
+  },
+  team02 = {
+    ad_group = "ou=foo,g=baz",
+    roles    = ["team02"],
+    spaces     = ["team02"],
+    cluster_permissions = [],
+    features = ["discover", "dashboard", "canvas", "maps", "ml", "visualize", "savedObjectsManagement"]
+    indices = [
+      {
+        names      = ["foobar"],
+        privileges = ["index"]
+      }
+    ]
+  }
+}

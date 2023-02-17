@@ -1,0 +1,7 @@
+variable "teams" {}
+
+module "workspace" {
+  source = ".."
+
+  teams = var.teams
+}
