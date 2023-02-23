@@ -1,0 +1,7 @@
+{
+  "properties": {
+    "foobar": {
+      "type": "text"
+    }
+  }
+}

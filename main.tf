@@ -1,20 +1,18 @@
 
 resource "kibana_user_space" "userspace" {
-  for_each    = var.teams
-  uid         = each.key
-  name        = each.key
-  description = each.key
-  disabled_features = setsubtract(local.all_kibana_features, each.value.features)
+  uid         = var.team_name
+  name        = var.team_name
+  description = var.team_name
+  disabled_features = setsubtract(local.all_kibana_features, var.kibana_features)
 
 }
 
 resource "kibana_role" "role" {
-  for_each = var.teams
-  name     = each.key
+  name     = var.team_name
   elasticsearch {
-    cluster = each.value.cluster_permissions
+    cluster = var.cluster_permissions
     dynamic "indices" {
-      for_each = each.value.indices
+      for_each = var.indices
       content {
         names      = indices.value.names
         privileges = indices.value.privileges
@@ -23,24 +21,38 @@ resource "kibana_role" "role" {
   }
   kibana {
     dynamic "features" {
-      for_each = each.value.features
+      for_each = var.kibana_features
       content {
         name        = features.value
         permissions = ["all"]
       }
     }
-    spaces = each.value.spaces
+    spaces = var.kibana_spaces
   }
 }
 
 resource "elasticstack_elasticsearch_security_role_mapping" "mapping" {
-  for_each = var.teams
-  name     = each.key
+  name     = var.team_name
   enabled  = true
-  roles    = each.value.roles
+  roles    = var.roles
   rules = jsonencode({
     any = [
-      { field = { group = each.value.ad_group } }
+      { field = { group = var.ad_group } }
     ]
   })
+}
+
+resource "elasticstack_elasticsearch_component_template" "my_template" {
+  name = var.team_name
+
+  template {
+    mappings = var.index_mapping
+  }
+}
+
+resource "elasticstack_elasticsearch_index_template" "my_template" {
+  name = var.team_name
+
+  index_patterns = ["${var.team_name}-foobar"]
+  composed_of    = [elasticstack_elasticsearch_component_template.my_template.name, var.base_template]
 }
