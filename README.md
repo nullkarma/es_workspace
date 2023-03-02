@@ -27,5 +27,5 @@ Empty permission (kibana features, cluster permissions, roles) lists result in n
 | indices             | List of indices and their permission for that particular group | `list(map(list(string))) | see varibables | true     |
 | kibana_spaces       | List of kibana space the group has access to                   | `list(string)            | `[]`           |false|
 | kibana_features     | Which kibana features to enable                                | `list(string)            | `[]`           | false    |
-| base_template       | a                                                              | `a`                      | `Null`         | false    |
-| index_mapping       | a                                                              | `a`                      | `Null`         | false    |
+| base_template       | base template with index settings & mappings                   | string                   | `Null`         | false    |
+| index_mapping       | Composition Template with index mapping                        | string                   | `Null`         | false    |
