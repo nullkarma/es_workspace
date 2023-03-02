@@ -1,0 +1,19 @@
+
+module "admins" {
+  source = "../workspace"
+
+  name = "admins"
+  auth_group  = "ou=admins,g=bar"
+  cluster_permissions = [""]
+  // all kibana features enables. check locals.tf for more granular permmissions.
+  kibana_features = ["discover", "dashboard", "canvas", "maps", "ml", "visualize", "logs", "infrastructure", "apm", "uptime", "observabilityCases", "siem", "securitySolutionCases", "advancedSettings", "indexPatterns", "savedObjectsManagement", "savedObjectsTagging", "osquery", "actions", "generalCases", "stackAlerts", "fleet", "fleetv2", "monitoring"]
+  indices = [
+    {
+      names      = ["*"],
+      privileges = ["all"]
+    }
+  ]
+  kibana_spaces = ["admins"]
+  roles = ["admins"]
+}
+

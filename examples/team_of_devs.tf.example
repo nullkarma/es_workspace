@@ -1,0 +1,19 @@
+
+module "team01" {
+  source = "../workspace"
+
+  name = "shippers"
+  auth_group  = "ou=foo,g=bar"
+  cluster_permissions = ["all"]
+  // disable features in kibana
+  kibana_features = []
+  indices = [
+    {
+      names      = ["*"],
+      privileges = ["all"]
+    }
+  ]
+  kibana_spaces = ["shippers"]
+  roles = ["shippers"]
+}
+
