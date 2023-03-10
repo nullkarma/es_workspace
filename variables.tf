@@ -39,7 +39,7 @@ variable "kibana_spaces" {
 // List of features to enable for a Kibana space
 variable "kibana_features" {
   type    = list(string)
-  default = []
+  default = ["all"]
 }
 
 // Name of the parent (master) template. Used with component templates

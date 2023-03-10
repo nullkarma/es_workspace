@@ -35,7 +35,7 @@ No modules.
 | <a name="input_cluster_permissions"></a> [cluster\_permissions](#input\_cluster\_permissions) | Defines elasticsearch cluster permissions for a role | `list(string)` | `[]` | no |
 | <a name="input_index_mapping"></a> [index\_mapping](#input\_index\_mapping) | index mapping for an index | `any` | `null` | no |
 | <a name="input_indices"></a> [indices](#input\_indices) | List of indices with permissions that will be attached to a role | `list(map(list(any)))` | <pre>[<br>  {<br>    "names": [],<br>    "privileges": []<br>  }<br>]</pre> | no |
-| <a name="input_kibana_features"></a> [kibana\_features](#input\_kibana\_features) | List of features to enable for a Kibana space | `list(string)` | `[]` | no |
+| <a name="input_kibana_features"></a> [kibana\_features](#input\_kibana\_features) | List of features to enable for a Kibana space | `list(string)` | <pre>[<br>  "all"<br>]</pre> | no |
 | <a name="input_kibana_spaces"></a> [kibana\_spaces](#input\_kibana\_spaces) | one or more Kibana spaces that will be added to a role | `list(string)` | `[]` | no |
 | <a name="input_name"></a> [name](#input\_name) | Universally used for all resource names | `string` | n/a | yes |
 | <a name="input_roles"></a> [roles](#input\_roles) | Roles to attach to a role mapping | `list(string)` | n/a | yes |
