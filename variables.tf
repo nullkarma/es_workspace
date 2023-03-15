@@ -14,6 +14,8 @@ variable "auth_group" {
 }
 
 // Defines elasticsearch cluster permissions for a role
+// FIXME: The pinned version has a bug, where a provisioned role will `all` cluster permissions cannot be altered anymore.
+// The role has to be destroyed and reprovisioned with a different set of cluster permissions
 variable "cluster_permissions" {
   type    = list(string)
   default = []
