@@ -32,7 +32,7 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_auth_group"></a> [auth\_group](#input\_auth\_group) | Used for user looking in role mapping | `string` | n/a | yes |
 | <a name="input_base_template"></a> [base\_template](#input\_base\_template) | Name of the parent (master) template. Used with component templates | `any` | `null` | no |
-| <a name="input_cluster_permissions"></a> [cluster\_permissions](#input\_cluster\_permissions) | Defines elasticsearch cluster permissions for a role | `list(string)` | `[]` | no |
+| <a name="input_cluster_permissions"></a> [cluster\_permissions](#input\_cluster\_permissions) | Defines elasticsearch cluster permissions for a role. | `list(string)` | `[]` | no |
 | <a name="input_index_mapping"></a> [index\_mapping](#input\_index\_mapping) | index mapping for an index | `any` | `null` | no |
 | <a name="input_indices"></a> [indices](#input\_indices) | List of indices with permissions that will be attached to a role | `list(map(list(any)))` | <pre>[<br>  {<br>    "names": [],<br>    "privileges": []<br>  }<br>]</pre> | no |
 | <a name="input_kibana_features"></a> [kibana\_features](#input\_kibana\_features) | List of features to enable for a Kibana space | `list(string)` | <pre>[<br>  "all"<br>]</pre> | no |
