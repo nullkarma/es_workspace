@@ -53,3 +53,8 @@ variable "index_mapping" {
   default = null
   description = "index mapping for an index"
 }
+
+variable "delete_index_after" {
+  default = "30d"
+  description = "Defines the retention period of an index in days. Must include 'd' at the end"
+}

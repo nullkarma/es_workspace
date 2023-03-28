@@ -15,3 +15,6 @@ locals {
   all_kibana_features = setunion(flatten([local.kibana_features.analytics, local.kibana_features.observability, local.kibana_features.security, local.kibana_features.management]))
 }
 
+locals {
+  indices = [for i in var.indices : i.names]
+}

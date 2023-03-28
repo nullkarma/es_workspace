@@ -49,15 +49,57 @@ resource "elasticstack_elasticsearch_security_role_mapping" "rm" {
   roles   = var.roles
   rules = jsonencode({
     any = [
-      { field = { group = var.auth_group } }
+      { field = { groups = var.auth_group } }
     ]
   })
+}
+
+/**
+* Comment
+*/
+resource "elasticstack_elasticsearch_index_lifecycle" "ilm" {
+  name = var.name
+
+  hot {
+    min_age = "7d"
+    set_priority {
+      priority = 10
+    }
+    rollover {
+      max_size = "10gb"
+      max_docs = 1800000000
+    }
+  }
+  delete {
+    min_age = var.delete_index_after
+    delete {}
+  }
 }
 
 /**
 * A component template is an index template that can define index settings and mapping as well as cluster settings
 * Instead of defining everything in one template, it is advised to create multiple templates and organize them in an index_template
 */
+/*
+resource "elasticstack_elasticsearch_component_template" "ct-settings" {
+  name = "${var.name}-settings"
+
+  template {
+    settings = jsonencode(
+      {
+        number_of_shards = 1
+        number_of_replicas = 0
+        index = {
+          lifecycle = {
+            name = var.name
+          }
+        }
+      }
+    )
+  }
+}
+*/
+
 resource "elasticstack_elasticsearch_component_template" "ct" {
   count = var.index_mapping != null ? 1 : 0
   name  = var.name
@@ -71,10 +113,37 @@ resource "elasticstack_elasticsearch_component_template" "ct" {
 * index templates are a composition of component templates.
 * Every team can apply an index mapping for their indices. The template will be applied to all indices defined in `indices`
 */
+/*
 resource "elasticstack_elasticsearch_index_template" "template" {
   count = var.index_mapping != null ? 1 : 0
   name  = var.name
 
   index_patterns = [for s in flatten([for i in var.indices : i.names]) : "${s}*"]
-  composed_of    = [elasticstack_elasticsearch_component_template.ct[count.index].name, var.base_template]
+  composed_of    = [elasticstack_elasticsearch_component_template.ct-settings, elasticstack_elasticsearch_component_template.ct[count.index].name, var.base_template]
+}
+*/
+
+resource "elasticstack_elasticsearch_index_template" "it" {
+  name  = var.name
+  index_patterns = [for s in flatten([for i in var.indices : i.names]) : "${s}*"]
+  #index_patterns = [for i in var.indices : i.names]
+  template {
+    // make sure our template uses prepared ILM policy
+    settings = jsonencode({
+      "lifecycle.name" = elasticstack_elasticsearch_index_lifecycle.ilm.name
+    })
+  }
+
+  data_stream {}
+
+  composed_of    = [var.base_template]
+}
+
+resource "elasticstack_elasticsearch_data_stream" "ds" {
+  name = var.name
+
+  // make sure that template is created before the data stream
+  depends_on = [
+    elasticstack_elasticsearch_index_template.it
+  ]
 }
