@@ -1,9 +1,9 @@
 module "ingest" {
   source = "../workspace"
 
-  name                = "filebeat"
-  access_only         = true
-  auth_group          = "ou=ingest,g=group"
+  name        = "filebeat"
+  access_only = true
+  auth_group  = "ou=ingest,g=group"
   indices = [
     {
       name       = "*",
