@@ -7,14 +7,15 @@
 */
 locals {
   kibana_features = {
-    analytics     = ["discover", "dashboard", "canvas", "maps", "ml", "visualize"]
+    analytics     = ["discover", "dashboard", "canvas", "maps", "ml", "visualize", "graph"]
     observability = ["logs", "infrastructure", "apm", "uptime", "observabilityCases"]
     security      = ["siem", "securitySolutionCases"]
-    management    = ["advancedSettings", "indexPatterns", "savedObjectsManagement", "savedObjectsTagging", "osquery", "actions", "generalCases", "stackAlerts", "fleet", "fleetv2", "monitoring"]
+    management    = ["advancedSettings", "indexPatterns", "savedObjectsManagement", "savedObjectsTagging", "osquery", "actions", "generalCases", "stackAlerts", "fleet", "dev_tools", "monitoring"]
   }
   all_kibana_features = setunion(flatten([local.kibana_features.analytics, local.kibana_features.observability, local.kibana_features.security, local.kibana_features.management]))
+
+  indices = toset([for i in var.indices : i.name])
+
+
 }
 
-locals {
-  indices = [for i in var.indices : i.names]
-}

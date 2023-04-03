@@ -1,19 +1,16 @@
-
-module "admins" {
+module "ingest" {
   source = "../workspace"
 
-  name = "admins"
-  auth_group  = "ou=admins,g=bar"
-  cluster_permissions = [""]
-  // all kibana features enables. check locals.tf for more granular permmissions.
-  kibana_features = ["discover", "dashboard", "canvas", "maps", "ml", "visualize", "logs", "infrastructure", "apm", "uptime", "observabilityCases", "siem", "securitySolutionCases", "advancedSettings", "indexPatterns", "savedObjectsManagement", "savedObjectsTagging", "osquery", "actions", "generalCases", "stackAlerts", "fleet", "fleetv2", "monitoring"]
+  name                = "filebeat"
+  access_only         = true
+  auth_group          = "ou=ingest,g=group"
   indices = [
     {
-      names      = ["*"],
+      name       = "*",
       privileges = ["all"]
     }
   ]
-  kibana_spaces = ["admins"]
-  roles = ["admins"]
+  kibana_spaces = []
+  base_template = "base"
+  roles         = ["filebeat"]
 }
-

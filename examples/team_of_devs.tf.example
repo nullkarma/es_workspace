@@ -9,7 +9,7 @@ module "team01" {
   kibana_features = []
   indices = [
     {
-      names      = ["*"],
+      name       = ["my_team_index"],
       privileges = ["all"]
     }
   ]
