@@ -124,61 +124,6 @@ resource "elasticstack_elasticsearch_index_lifecycle" "this" {
 }
 
 /**
-* A component template is an index template that can define index settings and mapping as well as cluster settings
-* Instead of defining everything in one template, it is advised to create multiple templates and organize them in an index_template
-*/
-/*
-resource "elasticstack_elasticsearch_component_template" "ct-settings" {
-  name = "${var.name}-settings"
-
-  template {
-    settings = jsonencode(
-      {
-        number_of_shards = 1
-        number_of_replicas = 0
-        index = {
-          lifecycle = {
-            name = var.name
-          }
-        }
-      }
-    )
-  }
-}
-*/
-
-/**
-* A component template is an index template that can define index settings and mapping as well as cluster settings
-* Instead of defining everything in one template, it is advised to create multiple templates and organize them in an index_template
-* https://www.elastic.co/guide/en/elasticsearch/reference/8.7/indices-component-template.html
-*/
-
-/*
-resource "elasticstack_elasticsearch_component_template" "this" {
-  count = var.index_mapping != null ? 1 : 0
-  name  = var.name
-
-  template {
-    mappings = var.index_mapping
-  }
-}
-*/
-
-/**
-* index templates are a composition of component templates.
-* Every team can apply an index mapping for their indices. The template will be applied to all indices defined in `indices`
-*/
-/*
-resource "elasticstack_elasticsearch_index_template" "template" {
-  count = var.index_mapping != null ? 1 : 0
-  name  = var.name
-
-  index_patterns = [for s in flatten([for i in var.indices : i.names]) : "${s}*"]
-  composed_of    = [elasticstack_elasticsearch_component_template.ct-settings, elasticstack_elasticsearch_component_template.ct[count.index].name, var.base_template]
-}
-*/
-
-/**
 * index templates are a composition of component templates.
 * Every team can apply an index mapping for their indices. The template will be applied to all indices defined in `indices`
 * https://www.elastic.co/guide/en/elasticsearch/reference/8.7/indices-put-template.html
