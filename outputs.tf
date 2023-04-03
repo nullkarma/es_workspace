@@ -3,5 +3,5 @@ output "team" {
 }
 
 output "workspace_id" {
-  value = kibana_user_space.userspace.id
+  value = kibana_user_space.this.id
 }
