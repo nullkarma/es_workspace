@@ -1,19 +1,25 @@
-
-module "team01" {
+module "workspace_team01" {
   source = "../workspace"
 
-  name = "shippers"
-  auth_group  = "ou=foo,g=bar"
-  cluster_permissions = ["all"]
-  // disable features in kibana
-  kibana_features = []
+  depends_on = [
+    elasticstack_elasticsearch_component_template.base_template
+  ]
+  name                = "team01"
+  auth_group          = "ou=foo,g=baz"
+  cluster_permissions = []
+  kibana_features     = ["discover", "dashboard", "canvas", "maps", "ml", "visualize", "savedObjectsManagement", "generalCases"]
   indices = [
     {
-      name       = ["my_team_index"],
+      name       = "demo1",
+      privileges = ["all"]
+    },
+    {
+      name       = "demo2",
       privileges = ["all"]
     }
   ]
-  kibana_spaces = ["shippers"]
-  roles = ["shippers"]
+  kibana_spaces = ["team01"]
+  base_template = "base"
+  index_mapping = file("mapping.json")
+  roles         = ["team01"]
 }
-

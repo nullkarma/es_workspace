@@ -33,7 +33,6 @@ A module to customize your ...
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_curl"></a> [curl](#requirement\_curl) | 0.2.2 |
 | <a name="requirement_elasticstack"></a> [elasticstack](#requirement\_elasticstack) | 0.5.0 |
 | <a name="requirement_kibana"></a> [kibana](#requirement\_kibana) | 8.5.2 |
 
@@ -52,7 +51,6 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [elasticstack_elasticsearch_component_template.this](https://registry.terraform.io/providers/elastic/elasticstack/0.5.0/docs/resources/elasticsearch_component_template) | resource |
 | [elasticstack_elasticsearch_data_stream.this](https://registry.terraform.io/providers/elastic/elasticstack/0.5.0/docs/resources/elasticsearch_data_stream) | resource |
 | [elasticstack_elasticsearch_index_lifecycle.this](https://registry.terraform.io/providers/elastic/elasticstack/0.5.0/docs/resources/elasticsearch_index_lifecycle) | resource |
 | [elasticstack_elasticsearch_index_template.this](https://registry.terraform.io/providers/elastic/elasticstack/0.5.0/docs/resources/elasticsearch_index_template) | resource |
@@ -67,7 +65,7 @@ No modules.
 | <a name="input_access_only"></a> [access\_only](#input\_access\_only) | Only provision roles and role mappings. Do not create data views and index templates. Commonly used for admins and ingest users | `bool` | `false` | no |
 | <a name="input_all_privileges"></a> [all\_privileges](#input\_all\_privileges) | Grants all Kibana role privileges to a group. shortcut for passing all possible privileges in a list | `bool` | `false` | no |
 | <a name="input_auth_group"></a> [auth\_group](#input\_auth\_group) | Used for user looking in role mapping | `string` | n/a | yes |
-| <a name="input_base_template"></a> [base\_template](#input\_base\_template) | Name of the parent (master) template. Used with component templates | `any` | `null` | no |
+| <a name="input_base_template"></a> [base\_template](#input\_base\_template) | Name of the parent (master) template. Used with component templates | `string` | `null` | no |
 | <a name="input_cluster_permissions"></a> [cluster\_permissions](#input\_cluster\_permissions) | Defines elasticsearch cluster permissions for a role. | `list(string)` | `[]` | no |
 | <a name="input_delete_index_after"></a> [delete\_index\_after](#input\_delete\_index\_after) | Defines the retention period of an index in days | `string` | `"30d"` | no |
 | <a name="input_index_mapping"></a> [index\_mapping](#input\_index\_mapping) | index mapping for an index | `any` | `null` | no |

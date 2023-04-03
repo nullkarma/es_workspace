@@ -55,7 +55,8 @@ variable "kibana_features" {
 }
 
 variable "base_template" {
-  default     = null
+  type = string
+  default = null
   description = "Name of the parent (master) template. Used with component templates"
 }
 
@@ -65,16 +66,19 @@ variable "index_mapping" {
 }
 
 variable "delete_index_after" {
+  type = string
   default     = "30d"
   description = "Defines the retention period of an index in days"
 }
 
 variable "index_min_age" {
+  type = string
   default     = "7d"
   description = "Defines how long an index stays in the hot phase before getting rolled over"
 }
 
 variable "index_max_size" {
+  type = string
   default     = "10gb"
   description = "Determines the max size of an index to trigger the ilm rollover"
 }

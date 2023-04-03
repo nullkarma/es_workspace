@@ -94,6 +94,7 @@ resource "elasticstack_elasticsearch_security_role_mapping" "this" {
 /**
 *
 * Consumer specific blocks. Only needed for actual kibana users.
+* Enable by var.access_only = false
 *
 **/
 
@@ -151,6 +152,8 @@ resource "elasticstack_elasticsearch_component_template" "ct-settings" {
 * Instead of defining everything in one template, it is advised to create multiple templates and organize them in an index_template
 * https://www.elastic.co/guide/en/elasticsearch/reference/8.7/indices-component-template.html
 */
+
+/*
 resource "elasticstack_elasticsearch_component_template" "this" {
   count = var.index_mapping != null ? 1 : 0
   name  = var.name
@@ -159,6 +162,7 @@ resource "elasticstack_elasticsearch_component_template" "this" {
     mappings = var.index_mapping
   }
 }
+*/
 
 /**
 * index templates are a composition of component templates.
@@ -189,11 +193,12 @@ resource "elasticstack_elasticsearch_index_template" "this" {
     settings = jsonencode({
       "lifecycle.name" = elasticstack_elasticsearch_index_lifecycle.this[0].name
     })
+    mappings = var.index_mapping != null ? var.index_mapping : jsonencode({})
   }
 
   data_stream {}
 
-  composed_of = [var.base_template]
+  composed_of = var.base_template != null ? [var.base_template] : []
 }
 
 /**
