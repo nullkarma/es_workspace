@@ -132,7 +132,7 @@ resource "elasticstack_elasticsearch_index_lifecycle" "this" {
 resource "elasticstack_elasticsearch_index_template" "this" {
   for_each       = var.access_only ? toset([]) : local.indices
   name           = each.key
-  index_patterns = [regex("^\\*$", each.key) ? "${each.key}" : "${each.key}*"]
+  index_patterns = [length(regexall("^\\*$", each.key)) <= 1 ? "${each.key}" : "${each.key}*"]
   template {
     // make sure our template uses ILM policy
     settings = jsonencode({
